@@ -35,6 +35,20 @@ const modal1 =
           }
         }
       ]
-    }
+    },
+    {
+      "block_id": "my_block_id",
+      "type": "input",
+      "optional": true,
+      "label": {
+        "type": "plain_text",
+        "text": "Select a channel to post the result on",
+      },
+      "element": {
+        "action_id": "my_action_id",
+        "type": "conversations_select",
+        "response_url_enabled": true,
+      },
+    },
   ];
 module.exports = modal1;

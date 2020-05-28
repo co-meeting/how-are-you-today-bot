@@ -1,7 +1,8 @@
 const functions = require('firebase-functions');
 
 const fetch = require('node-fetch');
-const modal1 = require('./blocks/modal1')
+const modal1 = require('./blocks/modal1');
+const modal2 = require('./blocks/modal2');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -10,7 +11,6 @@ const modal1 = require('./blocks/modal1')
 //  response.send("Hello from Firebase!");
 // });
 function viewsOpen(payload, res) {
-  console.log(payload.trigger_id,  payload.callback_id);
   const body = {
     "trigger_id": payload.trigger_id,
     "view": {
@@ -49,8 +49,8 @@ function viewsOpen(payload, res) {
 
 function postMessage(payload, res) {
   const body = {
-    "channel": "C061EG9SL",
-    "text": "I hope the tour went well, Mr. Wonka."
+    "channel": payload.response_urls[0].channel_id,
+    "text": "TODO: show message built from view.state in payload."
   };
   console.log(JSON.stringify(body));
   fetch('https://slack.com/api/chat.postMessage', {
@@ -64,7 +64,6 @@ function postMessage(payload, res) {
     return response.json();
   }).then((json) => {
     console.log(json);
-    res.sendStatus(200);
     return;
   }).catch((err) => {
     console.log(err);
@@ -80,7 +79,20 @@ exports.shortcut = functions.https.onRequest(async (req, res) => {
   } else
     if (payload.type === 'view_submission') {
       postMessage(payload, res);
-      res.send('OK');
+      // 待たずに返す
+      const body = {
+        "response_action": "update",
+        "view": {
+          "type": "modal",
+          "title": {
+            "type": "plain_text",
+            "text": "Updated view"
+          },
+          "blocks": modal2
+        }
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(body));
     } else {
       res.sendStatus(404);
     }
