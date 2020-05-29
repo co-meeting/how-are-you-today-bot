@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 
-const { App } = require("@slack/bolt");
+const { WebClient } = require('@slack/web-api');
 
 const fetch = require('node-fetch');
 const { createReadStream } = require('fs');
@@ -10,19 +10,13 @@ const modal2 = require('./blocks/modal2');
 
 const getQuestion = require('./questions/questions');
 
-const {
-  token, channel, signing_secret: signingSecret
-} = functions.config().slack;
+const { token, channel } = functions.config().slack;
 
-const app = new App({
-  token,
-  signingSecret
-});
+const web = new WebClient(token);
 
-function viewsOpen(payload, res) {
-  const body = {
-    "trigger_id": payload.trigger_id,
-    "view": {
+async function viewsOpen(payload, res) {
+  try {
+    const view = {
       "type": "modal",
       "callback_id": payload.callback_id,
       "title": {
@@ -34,38 +28,32 @@ function viewsOpen(payload, res) {
         "text": "投稿",
         "emoji": true
       },
-      "blocks": modal1,
-    }
-  };
-  console.log(JSON.stringify(body));
-  fetch('https://slack.com/api/views.open', {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  }).then((response) => {
-    return response.json();
-  }).then((json) => {
-    console.log(json);
+      "blocks": modal1
+    };
+    console.log(JSON.stringify(view));
+    const response = await web.views.open({
+      token,
+      trigger_id: payload.trigger_id,
+      view: view
+    });
+    console.log(response);
     res.send('OK');
     return;
-  }).catch((err) => {
-    console.log(err);
-  })
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function postMessage(payload, res) {
   try {
-    const user = await app.client.users.info({
+    const user = await web.users.info({
       token,
       user: payload.user.id
     });
     // TODO: 画像合成でuser.user.profile.image_48を使用する
     const question = getQuestion();
     const answer = payload.view.state.values.question.answer.value;
-    const file = await app.client.files.upload({
+    const file = await web.files.upload({
       token,
       channels: channel,
       initial_comment: `Q:「${question}」\n<@${payload.user.id}>:「${answer}」`,
