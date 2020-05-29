@@ -1,3 +1,5 @@
+const getQuestion = require('../questions/questions');
+
 const modal1 = [
   {
     type: "input",
@@ -6,7 +8,7 @@ const modal1 = [
     },
     label: {
       type: "plain_text",
-      text: "昨日何しましたか？（日々のランダム質問）",
+      text: getQuestion(),
       emoji: true,
     },
   },
