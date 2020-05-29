@@ -17,7 +17,7 @@ const modal1 = [
     type: "image",
     title: {
       type: "plain_text",
-      text: "今日の気分1",
+      text: " ",
       emoji: true,
     },
     image_url:
@@ -45,7 +45,7 @@ const modal1 = [
     type: "image",
     title: {
       type: "plain_text",
-      text: "今日の気分2",
+      text: " ",
       emoji: true,
     },
     image_url:
@@ -73,7 +73,7 @@ const modal1 = [
     type: "image",
     title: {
       type: "plain_text",
-      text: "今日の気分3",
+      text: " ",
       emoji: true,
     },
     image_url:
