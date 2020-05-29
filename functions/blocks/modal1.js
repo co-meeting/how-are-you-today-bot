@@ -1,54 +1,102 @@
-const modal1 =
-  [
-    {
-      "type": "input",
-      "element": {
-        "type": "plain_text_input",
-        "action_id": "title",
-        "placeholder": {
-          "type": "plain_text",
-          "text": "What do you want to ask of the world?"
-        }
-      },
-      "label": {
-        "type": "plain_text",
-        "text": "今朝食べたご飯は？"
-      }
+const modal1 = [
+  {
+    type: "input",
+    element: {
+      type: "plain_text_input",
     },
-    {
-      "type": "actions",
-      "elements": [
-        {
-          "type": "button",
-          "action_id": "add_option1",
-          "text": {
-            "type": "plain_text",
-            "text": "Image 1"
-          }
+    label: {
+      type: "plain_text",
+      text: "昨日何しましたか？（日々のランダム質問）",
+      emoji: true,
+    },
+  },
+  {
+    type: "divider",
+  },
+  {
+    type: "image",
+    title: {
+      type: "plain_text",
+      text: "今日の気分1",
+      emoji: true,
+    },
+    image_url:
+      "https://user-images.githubusercontent.com/41602570/82641955-1b6e1900-9c48-11ea-85ba-9e50f2ebd3c1.png",
+    alt_text: "Example Image",
+  },
+  {
+    type: "actions",
+    elements: [
+      {
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: "選択",
+          emoji: true,
         },
-        {
-          "type": "button",
-          "action_id": "add_option2",
-          "text": {
-            "type": "plain_text",
-            "text": "Image 2"
-          }
-        }
-      ]
-    },
-    {
-      "block_id": "my_block_id",
-      "type": "input",
-      "optional": true,
-      "label": {
-        "type": "plain_text",
-        "text": "Select a channel to post the result on",
+        value: "kyounokibunn1",
       },
-      "element": {
-        "action_id": "my_action_id",
-        "type": "conversations_select",
-        "response_url_enabled": true,
-      },
+    ],
+  },
+  {
+    type: "divider",
+  },
+  {
+    type: "image",
+    title: {
+      type: "plain_text",
+      text: "今日の気分2",
+      emoji: true,
     },
-  ];
+    image_url:
+      "https://user-images.githubusercontent.com/41602570/82643334-4c4f4d80-9c4a-11ea-973b-d9a098d9779b.png",
+    alt_text: "Example Image",
+  },
+  {
+    type: "actions",
+    elements: [
+      {
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: "選択",
+          emoji: true,
+        },
+        value: "kyounokibunn2",
+      },
+    ],
+  },
+  {
+    type: "divider",
+  },
+  {
+    type: "image",
+    title: {
+      type: "plain_text",
+      text: "今日の気分3",
+      emoji: true,
+    },
+    image_url:
+      "https://user-images.githubusercontent.com/41602570/82643425-6ee16680-9c4a-11ea-97f4-1c6a1a336b67.png",
+    alt_text: "Example Image",
+  },
+  {
+    type: "actions",
+    elements: [
+      {
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: "✔️ 選択",
+          emoji: true,
+        },
+        style: "primary",
+        value: "kyounokibunn3",
+      },
+    ],
+  },
+  {
+    type: "divider",
+  },
+];
 module.exports = modal1;
