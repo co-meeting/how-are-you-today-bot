@@ -5,6 +5,8 @@ const { WebClient } = require('@slack/web-api');
 const fetch = require('node-fetch');
 const { createReadStream } = require('fs');
 
+const { generateImage } = require('./image/generate-image');
+
 const modal1 = require('./blocks/modal1');
 const modal2 = require('./blocks/modal2');
 
@@ -57,7 +59,8 @@ async function postMessage(payload, res) {
       token,
       channels: channel,
       initial_comment: `Q:「${question}」\n<@${payload.user.id}>:「${answer}」`,
-      file: createReadStream('./sample_image.png')
+      // file: createReadStream('./sample_image.png')
+      file: await generateImage(question, answer)
     });
     console.log(file);
     return file;
