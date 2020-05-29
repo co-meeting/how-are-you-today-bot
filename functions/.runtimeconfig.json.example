@@ -1,6 +1,7 @@
 {
   "slack": {
     "channel": "<投稿先のチャンネル名>",
-    "token": "<ボットのアクセストークン>"
+    "token": "<ボットのアクセストークン>",
+    "signing_secret": "<Signing Secret>"
   }
 }
