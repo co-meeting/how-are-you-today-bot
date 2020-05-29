@@ -25,7 +25,7 @@ function viewsOpen(payload, res) {
       },
       "submit": {
         "type": "plain_text",
-        "text": "Submit",
+        "text": "投稿",
         "emoji": true
       },
       "blocks": modal1,
