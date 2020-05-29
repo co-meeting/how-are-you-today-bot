@@ -52,17 +52,34 @@ function viewsOpen(payload, res) {
 
 function postMessage(payload, res) {
   const body = {
-    "channel": channel,
-    "text": "TODO: show message built from view.state in payload."
+    'token': accessToken,
+    'user': payload.user.id
   };
-  console.log(JSON.stringify(body));
-  fetch('https://slack.com/api/chat.postMessage', {
+  fetch('https://slack.com/api/users.info', {
     method: 'POST',
-    body: JSON.stringify(body),
+    body: Object.keys(body).map((key)=>key+"="+encodeURIComponent(body[key])).join("&"),
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencodedn',
       'Authorization': `Bearer ${accessToken}`
-    },
+    }
+  }).then((response) => {
+    return response.json();
+  }).then((user) => {
+    const body = {
+      "channel": channel,
+      "text": "TODO: show message built from view.state in payload.",
+      "username": payload.user.username,
+      "icon_url": user.user.profile.image_48
+    };
+    console.log(JSON.stringify(body));
+    return fetch('https://slack.com/api/chat.postMessage', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
   }).then((response) => {
     return response.json();
   }).then((json) => {
