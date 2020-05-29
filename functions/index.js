@@ -5,6 +5,7 @@ const modal1 = require('./blocks/modal1');
 const modal2 = require('./blocks/modal2');
 
 const accessToken = functions.config().slack.token;
+const channel = functions.config().slack.channel;
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -51,7 +52,7 @@ function viewsOpen(payload, res) {
 
 function postMessage(payload, res) {
   const body = {
-    "channel": payload.response_urls[0].channel_id,
+    "channel": channel,
     "text": "TODO: show message built from view.state in payload."
   };
   console.log(JSON.stringify(body));
