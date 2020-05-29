@@ -102,5 +102,61 @@ const modal1 = [
   {
     type: "divider",
   },
+  {
+    type: "image",
+    title: {
+      type: "plain_text",
+      text: " ",
+      emoji: true,
+    },
+    image_url:
+      "https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-04.png",
+    alt_text: "Image4",
+  },
+  {
+    type: "actions",
+    elements: [
+      {
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: "選択",
+          emoji: true,
+        },
+        value: "Image4",
+      },
+    ],
+  },
+  {
+    type: "divider",
+  },
+  {
+    type: "image",
+    title: {
+      type: "plain_text",
+      text: " ",
+      emoji: true,
+    },
+    image_url:
+      "https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-05.png",
+    alt_text: "Image5",
+  },
+  {
+    type: "actions",
+    elements: [
+      {
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: "選択",
+          emoji: true,
+        },
+        value: "Image5",
+      },
+    ],
+  },
+  {
+    type: "divider",
+  },
 ];
 module.exports = modal1;
