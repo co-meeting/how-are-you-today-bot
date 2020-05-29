@@ -25,8 +25,8 @@ const modal1 = [
       emoji: true,
     },
     image_url:
-      "https://user-images.githubusercontent.com/41602570/82641955-1b6e1900-9c48-11ea-85ba-9e50f2ebd3c1.png",
-    alt_text: "Example Image",
+      "https://raw.githubusercontent.com/co-meeting/how-are-you-today-bot/master/images/how-are-you-01.png?token=AJ5M4CVZAWN6K54ZYSHAUYK63IATG",
+    alt_text: "Image1",
   },
   {
     type: "actions",
@@ -38,7 +38,7 @@ const modal1 = [
           text: "選択",
           emoji: true,
         },
-        value: "kyounokibunn1",
+        value: "Image1",
       },
     ],
   },
@@ -53,8 +53,8 @@ const modal1 = [
       emoji: true,
     },
     image_url:
-      "https://user-images.githubusercontent.com/41602570/82643334-4c4f4d80-9c4a-11ea-973b-d9a098d9779b.png",
-    alt_text: "Example Image",
+      "https://raw.githubusercontent.com/co-meeting/how-are-you-today-bot/master/images/how-are-you-02.png?token=AJ5M4CQIFLH6POGA3KWTKQ263IAXW",
+    alt_text: "Image2",
   },
   {
     type: "actions",
@@ -66,7 +66,7 @@ const modal1 = [
           text: "選択",
           emoji: true,
         },
-        value: "kyounokibunn2",
+        value: "Image2",
       },
     ],
   },
@@ -81,8 +81,8 @@ const modal1 = [
       emoji: true,
     },
     image_url:
-      "https://user-images.githubusercontent.com/41602570/82643425-6ee16680-9c4a-11ea-97f4-1c6a1a336b67.png",
-    alt_text: "Example Image",
+      "https://raw.githubusercontent.com/co-meeting/how-are-you-today-bot/master/images/how-are-you-03.png?token=AJ5M4CSCB3BN5DK235MXBES63IAZW",
+    alt_text: "Image3",
   },
   {
     type: "actions",
@@ -95,7 +95,7 @@ const modal1 = [
           emoji: true,
         },
         style: "primary",
-        value: "kyounokibunn3",
+        value: "Image3",
       },
     ],
   },
