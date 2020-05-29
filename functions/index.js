@@ -1,18 +1,20 @@
 const functions = require('firebase-functions');
 
+const { App } = require("@slack/bolt");
+
 const fetch = require('node-fetch');
 const modal1 = require('./blocks/modal1');
 const modal2 = require('./blocks/modal2');
 
-const accessToken = functions.config().slack.token;
-const channel = functions.config().slack.channel;
+const {
+  token, channel, signing_secret: signingSecret
+} = functions.config().slack;
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+const app = new App({
+  token,
+  signingSecret
+});
+
 function viewsOpen(payload, res) {
   const body = {
     "trigger_id": payload.trigger_id,
@@ -37,7 +39,7 @@ function viewsOpen(payload, res) {
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`
+      'Authorization': `Bearer ${token}`
     },
   }).then((response) => {
     return response.json();
@@ -50,44 +52,25 @@ function viewsOpen(payload, res) {
   })
 }
 
-function postMessage(payload, res) {
-  const body = {
-    'token': accessToken,
-    'user': payload.user.id
-  };
-  fetch('https://slack.com/api/users.info', {
-    method: 'POST',
-    body: Object.keys(body).map((key)=>key+"="+encodeURIComponent(body[key])).join("&"),
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencodedn',
-      'Authorization': `Bearer ${accessToken}`
-    }
-  }).then((response) => {
-    return response.json();
-  }).then((user) => {
-    const body = {
-      "channel": channel,
-      "text": "TODO: show message built from view.state in payload.",
-      "username": payload.user.username,
-      "icon_url": user.user.profile.image_48
-    };
-    console.log(JSON.stringify(body));
-    return fetch('https://slack.com/api/chat.postMessage', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
+async function postMessage(payload, res) {
+  try {
+    const user = await app.client.users.info({
+      token: token,
+      user: payload.user.id
     });
-  }).then((response) => {
-    return response.json();
-  }).then((json) => {
-    console.log(json);
-    return;
-  }).catch((err) => {
-    console.log(err);
-  })
+    const result = await app.client.chat.postMessage({
+      token: token,
+      channel: channel,
+      text: "TODO: show message built from view.state in payload.",
+      username: payload.user.username,
+      icon_url: user.user.profile.image_48
+    });
+    console.log(result);
+    return result.json();
+  } catch (err) {
+    console.error(err);
+  }
+  return '';
 }
 
 exports.shortcut = functions.https.onRequest(async (req, res) => {
