@@ -3,7 +3,7 @@ const modal2 = [
     "type": "section",
     "text": {
       "type": "plain_text",
-      "text": "I've changed and I'll never be the same. You must believe me."
+      "text": "今日の気分を投稿しました。"
     }
   }
 ]

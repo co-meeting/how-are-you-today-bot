@@ -102,7 +102,7 @@ exports.shortcut = functions.https.onRequest(async (req, res) => {
           "type": "modal",
           "title": {
             "type": "plain_text",
-            "text": "Updated view"
+            "text": "今日の気分は？"
           },
           "blocks": modal2
         }
