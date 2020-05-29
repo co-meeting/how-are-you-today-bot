@@ -8,6 +8,8 @@ const { createReadStream } = require('fs');
 const modal1 = require('./blocks/modal1');
 const modal2 = require('./blocks/modal2');
 
+const getQuestion = require('./questions/questions');
+
 const {
   token, channel, signing_secret: signingSecret
 } = functions.config().slack;
@@ -60,26 +62,17 @@ async function postMessage(payload, res) {
       token,
       user: payload.user.id
     });
-    const result = await app.client.chat.postMessage({
+    // TODO: 画像合成でuser.user.profile.image_48を使用する
+    const question = getQuestion();
+    const answer = payload.view.state.values.question.answer.value;
+    const file = await app.client.files.upload({
       token,
-      channel,
-      blocks: [
-        {
-          type: "image",
-          title: {
-            type: "plain_text",
-            text: payload.view.state.values.question.answer.value,
-            emoji: true
-          },
-          image_url: 'https://user-images.githubusercontent.com/877015/83234428-33571700-a1cb-11ea-8c96-ca904f633921.png',
-          alt_text: "今日の気分"
-        }
-      ],
-      username: payload.user.username,
-      icon_url: user.user.profile.image_48
+      channels: channel,
+      initial_comment: `Q:「${question}」\n<@${payload.user.id}>:「${answer}」`,
+      file: createReadStream('./sample_image.png')
     });
-    console.log(result);
-    return result.json();
+    console.log(file);
+    return file;
   } catch (err) {
     console.error(err);
   }
