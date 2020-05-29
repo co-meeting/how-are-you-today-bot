@@ -3,6 +3,8 @@ const functions = require('firebase-functions');
 const { App } = require("@slack/bolt");
 
 const fetch = require('node-fetch');
+const { createReadStream } = require('fs');
+
 const modal1 = require('./blocks/modal1');
 const modal2 = require('./blocks/modal2');
 
@@ -55,13 +57,24 @@ function viewsOpen(payload, res) {
 async function postMessage(payload, res) {
   try {
     const user = await app.client.users.info({
-      token: token,
+      token,
       user: payload.user.id
     });
     const result = await app.client.chat.postMessage({
-      token: token,
-      channel: channel,
-      text: "TODO: show message built from view.state in payload.",
+      token,
+      channel,
+      blocks: [
+        {
+          type: "image",
+          title: {
+            type: "plain_text",
+            text: payload.view.state.values.question.answer.value,
+            emoji: true
+          },
+          image_url: 'https://user-images.githubusercontent.com/877015/83234428-33571700-a1cb-11ea-8c96-ca904f633921.png',
+          alt_text: "今日の気分"
+        }
+      ],
       username: payload.user.username,
       icon_url: user.user.profile.image_48
     });

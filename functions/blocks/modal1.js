@@ -3,7 +3,9 @@ const getQuestion = require('../questions/questions');
 const modal1 = [
   {
     type: "input",
+    block_id: "question",
     element: {
+      action_id: "answer",
       type: "plain_text_input",
     },
     label: {
