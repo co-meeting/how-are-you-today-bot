@@ -4,6 +4,8 @@ const fetch = require('node-fetch');
 const modal1 = require('./blocks/modal1');
 const modal2 = require('./blocks/modal2');
 
+const accessToken = functions.config().slack.token;
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -34,7 +36,7 @@ function viewsOpen(payload, res) {
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer xoxb-3783390692-1139957835811-wFQrnD6yIMPfEDHX30CHVe3d'
+      'Authorization': `Bearer ${accessToken}`
     },
   }).then((response) => {
     return response.json();
@@ -58,7 +60,7 @@ function postMessage(payload, res) {
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer xoxb-3783390692-1139957835811-wFQrnD6yIMPfEDHX30CHVe3d'
+      'Authorization': `Bearer ${accessToken}`
     },
   }).then((response) => {
     return response.json();
