@@ -25,7 +25,7 @@ const modal1 = [
       emoji: true,
     },
     image_url:
-      "https://raw.githubusercontent.com/co-meeting/how-are-you-today-bot/master/images/how-are-you-01.png?token=AJ5M4CVZAWN6K54ZYSHAUYK63IATG",
+      "https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-01.png",
     alt_text: "Image1",
   },
   {
@@ -53,7 +53,7 @@ const modal1 = [
       emoji: true,
     },
     image_url:
-      "https://raw.githubusercontent.com/co-meeting/how-are-you-today-bot/master/images/how-are-you-02.png?token=AJ5M4CQIFLH6POGA3KWTKQ263IAXW",
+      "https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-02.png",
     alt_text: "Image2",
   },
   {
@@ -81,7 +81,7 @@ const modal1 = [
       emoji: true,
     },
     image_url:
-      "https://raw.githubusercontent.com/co-meeting/how-are-you-today-bot/master/images/how-are-you-03.png?token=AJ5M4CSCB3BN5DK235MXBES63IAZW",
+      "https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-03.png",
     alt_text: "Image3",
   },
   {
