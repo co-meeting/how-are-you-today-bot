@@ -1,4 +1,4 @@
-const modal2 = [
+const modal2 = () => [
   {
     "type": "section",
     "text": {

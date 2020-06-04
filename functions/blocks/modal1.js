@@ -1,6 +1,6 @@
 const getQuestion = require('../questions/questions');
 
-const modal1 = [
+const modal1 = () => [
   {
     type: "input",
     block_id: "question",

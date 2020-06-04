@@ -30,7 +30,7 @@ async function viewsOpen(payload, res) {
         "text": "投稿",
         "emoji": true
       },
-      "blocks": modal1
+      "blocks": modal1()
     };
     console.log(JSON.stringify(view));
     const response = await web.views.open({
@@ -88,7 +88,7 @@ exports.shortcut = functions.https.onRequest(async (req, res) => {
             "type": "plain_text",
             "text": "今日の気分は？"
           },
-          "blocks": modal2
+          "blocks": modal2()
         }
       }
       res.setHeader('Content-Type', 'application/json');
