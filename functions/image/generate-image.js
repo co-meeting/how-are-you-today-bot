@@ -7,7 +7,8 @@ const canvas = createCanvas(canvasWidth, canvasHeight)
 const ctx = canvas.getContext('2d')
 
 async function generateImage(question, answer) {
-  const image = await loadImage('https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-03.png');
+  const num = Math.floor(Math.random() * 10);
+  const image = await loadImage(`https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-0${num}.png`);
   ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight);
 
   ctx.fillStyle = '#f7ffed';
