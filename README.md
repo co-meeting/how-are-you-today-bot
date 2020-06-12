@@ -4,14 +4,14 @@
 ## 事前準備(Slack API設定編)
 
 
-#### 1.[Slack API: Applications](https://api.slack.com/apps) を開き、アプリを新規作成( `Create New App` )する
+#### 1.[Slack API: Applications](https://api.slack.com/apps) を開き、アプリを新規作成( `Create New App` )
 ```
 例）
 App Name:今日のひとこと
 Development Slack Workspace: アプリをインストールしたい組織を選択
 ```
 
-#### 2.Basic Information を開き、 `Display Information` の内容を任意の内容で変更する
+#### 2.Basic Information を開き、 `Display Information` の内容を変更
 ```
 例）
 App Name: 今日のひとこと
@@ -20,21 +20,21 @@ App icon & Preview: 任意のアイコン
 Background color: 任意のカラー
 ```
  
-#### 3. App Home を開き、Your App’s Presence in Slackを入力する
+#### 3. App Home を開き、Your App’s Presence in Slackを入力
 ```
 例）
 Display Name:今日のひとこと
 Default username: how_are_you_today
 ```
 
-#### 4.OAuth Tokens & Redirect URLs を開き、以下Scopesを追加する
+#### 4.OAuth Tokens & Redirect URLs を開き、以下Scopesを追加
  - `chat:write`
  - `users:read`
  - `files:write`
 
 
-#### 5.Interactivity & Shortcuts を開き、`Interactivity` を ON に変更する
-その後、以下の設定を行い `Save Changes`する。 
+#### 5.Interactivity & Shortcuts を開き、`Interactivity` を ON に変更
+その後、以下の設定を行い `Save Changes`する
    - `Request URL` は後ほど正式に入力するとして、適当に`https://localhost` と入力する
    - `Create New Shortcut` ボタンをクリックして、ショートカットを作成する
 ```
@@ -45,19 +45,19 @@ Short Description:　今日のひとこと
 Callback ID: how_are_you_today
 ```
 
-#### 6.Install App を開き、 `Install Appto Workspace` ボタンをクリックして組織にへインストールする
+#### 6.Install App を開き、 `Install Appto Workspace` ボタンをクリックして組織にへインストール
 
 一度、インストールすると、それ以後、APIの各設定を変更状況に応じて、Reinstall を求められるため、メッセージに応じて`Reinstall App` ボタンをクリッックして、再インストールする
 
-#### 7.インストールが完了したら、以下ページのトークンを別途メモしておく
+#### 7.インストールが完了したら、以下ページのトークンを別途メモする
  - `Bot User OAuth Access Token` 
    - `runtimeconfig.json`ファイルの`"token"`に記載必要な情報
    - Install Appを開くと表示あり
  - `Signing Secret` 
    - runtimeconfig.json`ファイルの`"signing_secret"`に記載必要な情報
-   - Basic Informationを開くと、App Credentialsに記載あり。showボタンの押下で閲覧可能
+   - Basic Informationを開くと、App Credentialsに記載あり（showボタンの押下で閲覧可能）
  
-#### 8.SlackのチャンネルにAppを追加する
+#### 8.SlackのチャンネルにAppを追加
  1. 任意のチャンネルを開き、[詳細]を開く
  2. [その他]を選択し、[アプリを追加する]を選択する
  3. リストから[今日のひとこと]を探して、[追加]ボタンをクリックして追加する
@@ -65,8 +65,8 @@ Callback ID: how_are_you_today
  
 ## ローカル開発
 
-事前準備として、ngrokコマンドをローカルから実行できるようにインストールしておく
- - [ngrok](https://ngrok.com/)
+#### 事前準備
+ - [ngrok](https://ngrok.com/)コマンドをローカルから実行できるようにインストールする
  
 
 #### 1.runtimeconfig.jsonファイルを生成
