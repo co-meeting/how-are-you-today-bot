@@ -80,7 +80,7 @@ async function postMessage(payload, res) {
   return '';
 }
 
-exports.shortcut = functions.https.onRequest(async (req, res) => {
+exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
   console.log(req.body)
   const payload = JSON.parse(req.body.payload);
   console.log(payload.type);
