@@ -1,4 +1,4 @@
-# Slack 今日のひとことBot の導入方法と開発サンプル
+# Slack 今日のひとことBot の導入方法と開発環境のデプロイ方法
 
 
 ## 事前準備(Slack API設定編)
@@ -49,15 +49,8 @@ Callback ID: how_are_you_today
 
 一度、インストールすると、それ以後、APIの各設定を変更状況に応じて、Reinstall を求められるため、メッセージに応じて`Reinstall App` ボタンをクリッックして、再インストールする
 
-#### 7.インストールが完了したら、以下ページのトークンを別途メモする
- - `Bot User OAuth Access Token` 
-   - `runtimeconfig.json`ファイルの`"token"`に記載必要な情報
-   - Install Appを開くと表示あり
- - `Signing Secret` 
-   - runtimeconfig.json`ファイルの`"signing_secret"`に記載必要な情報
-   - Basic Informationを開くと、App Credentialsに記載あり（showボタンの押下で閲覧可能）
- 
-#### 8.SlackのチャンネルにAppを追加
+
+#### 7.SlackのチャンネルにAppを追加
  1. 任意のチャンネルを開き、[詳細]を開く
  2. [その他]を選択し、[アプリを追加する]を選択する
  3. リストから[今日のひとこと]を探して、[追加]ボタンをクリックして追加する
@@ -78,8 +71,9 @@ cp functions/.runtimeconfig.json.example functions/.runtimeconfig.json
 `functions/.runtimeconfig.json` を適切に設定する
  - "channel" : 「今日のひとこと」を投稿するチャンネル名
  - "token" : Slack APIページ上記載の`Bot User OAuth Access Token` 
+   - Install Appを開くと表示あり
  - "signing_secret" : Slack APIページ上記載の`Signing Secret` 
-
+   - Basic Informationを開くと、App Credentialsに記載あり（showボタンの押下で閲覧可能）
 
 
 #### 2.npm パッケージのインストール
@@ -130,6 +124,8 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
 
 #### 事前準備
  - (アカウントがなければ)firebaseのアカウントを作成する
+ - firebaseのプロジェクトを作成する
+ - firebaseの外部公開URLを `Request URL`へ設定
  - [firebase](https://firebase.google.com/docs/functions/get-started?authuser=0)コマンドをローカルから実行できるようにインストールする
  
 
