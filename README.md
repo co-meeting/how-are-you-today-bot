@@ -4,14 +4,14 @@
 ## 事前準備(Slack API設定編)
 
 
-#### 1.[Slack API: Applications](https://api.slack.com/apps) を開き、アプリを新規作成( `Create New App` )する.
+#### 1.[Slack API: Applications](https://api.slack.com/apps) を開き、アプリを新規作成( `Create New App` )する
 ```
 例）
 App Name:今日のひとこと
 Development Slack Workspace: アプリをインストールしたい組織を選択
 ```
 
-#### 2.Basic Information を開き、 `Display Information` の内容を任意の内容で変更する。
+#### 2.Basic Information を開き、 `Display Information` の内容を任意の内容で変更する
 ```
 例）
 App Name: 今日のひとこと
@@ -27,16 +27,16 @@ Display Name:今日のひとこと
 Default username: how_are_you_today
 ```
 
-#### 4.OAuth Tokens & Redirect URLs を開き、以下Scopesを追加する。
+#### 4.OAuth Tokens & Redirect URLs を開き、以下Scopesを追加する
  - `chat:write`
  - `users:read`
  - `files:write`
 
 
-#### 5.Interactivity & Shortcuts を開き、`Interactivity` を ON に変更する。
+#### 5.Interactivity & Shortcuts を開き、`Interactivity` を ON に変更する
 その後、以下の設定を行い `Save Changes`する。 
-   - `Request URL` は後ほど正式に入力するとして、適当に`https://localhost` と入力する。
-   - `Create New Shortcut` ボタンをクリックして、ショートカットを作成する。
+   - `Request URL` は後ほど正式に入力するとして、適当に`https://localhost` と入力する
+   - `Create New Shortcut` ボタンをクリックして、ショートカットを作成する
 ```
 例）
 Where should this shortcut appear? :Global
@@ -45,37 +45,37 @@ Short Description:　今日のひとこと
 Callback ID: how_are_you_today
 ```
 
-#### 6.Install App を開き、 `Install Appto Workspace` ボタンをクリックして組織にへインストールする。
+#### 6.Install App を開き、 `Install Appto Workspace` ボタンをクリックして組織にへインストールする
 
-一度、インストールすると、それ以後、APIの各設定を変更状況に応じて、Reinstall を求められるため、メッセージに応じて`Reinstall App` ボタンをクリッックして、再インストールする。
+一度、インストールすると、それ以後、APIの各設定を変更状況に応じて、Reinstall を求められるため、メッセージに応じて`Reinstall App` ボタンをクリッックして、再インストールする
 
-#### 7.インストールが完了したら、以下ページのトークンを別途メモしておく。
+#### 7.インストールが完了したら、以下ページのトークンを別途メモしておく
  - `Bot User OAuth Access Token` 
    - `runtimeconfig.json`ファイルの`"token"`に記載必要な情報
-   - Install Appを開くと表示あり。
+   - Install Appを開くと表示あり
  - `Signing Secret` 
    - runtimeconfig.json`ファイルの`"signing_secret"`に記載必要な情報
-   - Basic Informationを開くと、App Credentialsに記載あり。showボタンの押下で閲覧可能。
+   - Basic Informationを開くと、App Credentialsに記載あり。showボタンの押下で閲覧可能
  
 #### 8.SlackのチャンネルにAppを追加する
  1. 任意のチャンネルを開き、[詳細]を開く
  2. [その他]を選択し、[アプリを追加する]を選択する
- 3. リストから[今日のひとこと]を探して、[追加]ボタンをクリックして追加する。
+ 3. リストから[今日のひとこと]を探して、[追加]ボタンをクリックして追加する
  
  
 ## ローカル開発
 
-事前準備として、ngrokコマンドをローカルから実行できるようにインストールしておく。
+事前準備として、ngrokコマンドをローカルから実行できるようにインストールしておく
  - [ngrok](https://ngrok.com/)
  
 
-#### 1.以下のコマンドを実行し、runtimeconfig.jsonファイルを生成する。
+#### 1.runtimeconfig.jsonファイルを生成
 
 ```
 cp functions/.runtimeconfig.json.example functions/.runtimeconfig.json
 ```
 
-`functions/.runtimeconfig.json` を適切に設定する。
+`functions/.runtimeconfig.json` を適切に設定する
  - "channel" : 「今日のひとこと」を投稿するチャンネル名
  - "token" : Slack APIページ上記載の`Bot User OAuth Access Token` 
  - "signing_secret" : Slack APIページ上記載の`Signing Secret` 
@@ -94,11 +94,11 @@ npm install
 npm run run-local
 ```
 
-#### 4.別のターミナルで、ngrokを利用しローカルPC上で稼働しているネットワークサービスを外部公開する
+#### 4.ngrokを利用しローカルサーバーを外部公開
 ```
 ngrok http 5001
 ```
-上記を実行すると以下のようなメッセージがターミナルに出力される。
+上記を実行すると以下のようなメッセージがターミナルに出力される
 ```
 ngrok by @inconshreveable                                                           (Ctrl+C to quit)
                                                                                                     
@@ -114,11 +114,11 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
                               16      0       0.00    0.00    1.59    60.92                         
 ```
 
-#### 5.ngrokで外部公開されたURLが表示されたら Slack APIページ上の`Request URL`を設定する。
+#### 5.外部公開URLを `Request URL`へ設定
 ```
 <ngrokのURL>/how-are-you-today-bot/us-central1/shortcut
 ```
- - `Request URL` は、Interactivity & Shortcuts を開き、`Interactivity` が ON の時に、設定できるパラメータ。
+ - `Request URL` は、Interactivity & Shortcuts を開き、`Interactivity` が ON の時に、設定できるパラメータである
  - 上記出力ケースの場合、以下のような値を`Request URL`へ設定
     - `https://xxxxxxxxxxxxxx.ngrok.io/how-are-you-today-bot/us-central1/shortcut`
     
