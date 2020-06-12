@@ -33,14 +33,12 @@ async function viewsOpen(payload, res) {
       },
       "blocks": blocks_input_answer()
     };
-    console.log(JSON.stringify(view));
     let response = await web.views.open({
       token,
       trigger_id: payload.trigger_id,
       view: view
     });
 
-    console.log(response);
     res.send('OK');
     return;
   } catch (err) {
@@ -65,7 +63,6 @@ async function postMessage(payload) {
       // file: createReadStream('./sample_image.png')
       file: await generateImage(question, answer, user.user, payload.actions[0].value)
     });
-    console.log(file);
     return file;
   } catch (err) {
     console.error(err);
@@ -90,7 +87,6 @@ async function showCompleteView(payload) {
       view: view
     });
 
-    console.log(response);
     return;
   } catch (err) {
     console.error(err);
@@ -98,9 +94,7 @@ async function showCompleteView(payload) {
 }
 
 exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
-  console.log(req.body)
   const payload = JSON.parse(req.body.payload);
-  console.log(payload.type);
   switch (payload.type) {
     case 'shortcut':
       viewsOpen(payload, res);
@@ -126,7 +120,6 @@ exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (re
       break;
     }
     case 'block_actions': {
-      console.log(payload);
       res.send('OK');
       postMessage(payload, res);
       showCompleteView(payload);
