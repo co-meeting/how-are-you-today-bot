@@ -1,4 +1,5 @@
 const { createCanvas, loadImage } = require('canvas')
+const { getConfig } = require('./config');
 
 const canvasWidth = 1200;
 const canvasHeight = 630;
@@ -16,17 +17,18 @@ function getNum() {
 
 async function generateImage(question, answer) {
   const num = getNum();
+  const config = getConfig(num);
   const image = await loadImage(`https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-${num}.png`);
   ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight);
 
-  ctx.fillStyle = '#f7ffed';
-  ctx.font = 'bold 48px "Noto Sans CJK JP"';
-  ctx.textAlign = 'center';
+  ctx.font = `bold 48px ${ctx.font}`
+  ctx.fillStyle = config.fillStyle;
+  ctx.textAlign = config.textAlign;
   ctx.fillText(question, canvasWidth/2, 120);
 
-  ctx.fillStyle = '#f7ffed';
-  ctx.font = 'bold 72px "Noto Sans CJK JP"';
-  ctx.textAlign = 'center';
+  ctx.font = `bold 72px ${ctx.font}`
+  ctx.fillStyle = config.fillStyle;
+  ctx.textAlign = config.textAlign;
   ctx.fillText(answer, canvasWidth/2, canvasHeight/2);
 
   return canvas.createPNGStream();
