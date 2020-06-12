@@ -1,12 +1,12 @@
-const { createCanvas, loadImage } = require('canvas')
+const { createCanvas, loadImage, registerFont } = require('canvas')
 const { getConfig } = require('./config');
 
 const canvasWidth = 1200;
 const canvasHeight = 630;
 const padding = 50;
 
-const canvas = createCanvas(canvasWidth, canvasHeight)
-const ctx = canvas.getContext('2d')
+let canvas;
+let ctx;
 
 function getNum() {
   let num;
@@ -70,10 +70,14 @@ async function generateImage(question, answer, user) {
   const num = getNum();
   const config = getConfig(num);
   const image = await loadImage(`https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-${num}.png`);
+  registerFont(config.font.path, config.font.fontFace);
+  canvas = createCanvas(canvasWidth, canvasHeight)
+  ctx = canvas.getContext('2d')
+
   ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight);
 
   renderText(question, {
-    font: `bold 48px ${ctx.font}`,
+    font: `bold 48px ${config.font.fontFace.family}`,
     lineHeight: 58,
     fillStyle: config.fillStyle,
     textAlign: config.textAlign,
@@ -81,7 +85,7 @@ async function generateImage(question, answer, user) {
   });
 
   renderText(answer, {
-    font: `bold 72px ${ctx.font}`,
+    font: `bold 72px ${config.font.fontFace.family}`,
     lineHeight: 84,
     fillStyle: config.fillStyle,
     textAlign: config.textAlign,

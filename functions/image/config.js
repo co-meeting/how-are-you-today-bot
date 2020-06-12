@@ -1,6 +1,11 @@
 const config = {
     'default': {
-        font: '"Noto Sans CJK JP"',
+        font: {
+            path: require.resolve('../fonts/MPLUSRounded1c-Medium.ttf'),
+            fontFace: {
+                family: '"Rounded Mplus 1c"'
+            }
+        },
         textAlign: 'center'
     },
     '01': {
