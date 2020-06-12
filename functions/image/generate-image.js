@@ -37,6 +37,7 @@ function splitByMeasureWidth(str) {
 }
 
 function renderText(text, style) {
+  ctx.textBaseline = 'middle';
   ctx.fillStyle = style.fillStyle;
   ctx.font = style.font;
   ctx.textAlign = style.textAlign;
@@ -81,7 +82,7 @@ async function generateImage(question, answer, user, imageNum) {
     lineHeight: 58,
     fillStyle: config.fillStyle,
     textAlign: config.textAlign,
-    top: 120
+    top: 140
   });
 
   renderText(answer, {
