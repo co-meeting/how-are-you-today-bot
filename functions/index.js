@@ -73,6 +73,30 @@ async function postMessage(payload) {
   return '';
 }
 
+async function showCompleteView(payload) {
+  try {
+    const view = {
+      "type": "modal",
+      "callback_id": payload.callback_id,
+      "title": {
+        "type": "plain_text",
+        "text": "今日のひとこと"
+      },
+      "blocks": blocks_complete()
+    };
+    let response = await web.views.update({
+      view_id: payload.container.view_id,
+      hash: payload.hash,
+      view: view
+    });
+
+    console.log(response);
+    return;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
   console.log(req.body)
   const payload = JSON.parse(req.body.payload);
@@ -103,21 +127,9 @@ exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (re
     }
     case 'block_actions': {
       console.log(payload);
+      res.send('OK');
       postMessage(payload, res);
-      const body = {
-        "response_action": "update",
-        "view": {
-          "type": "modal",
-          "title": {
-            "type": "plain_text",
-            "text": "今日のひとこと"
-          },
-          "blocks": blocks_complete()
-        }
-      }
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify(body));
-
+      showCompleteView(payload);
       break;
     }
     default:
