@@ -127,9 +127,27 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
 
 ## 本番デプロイ
 
-事前準備
 
+#### 事前準備
+ - (アカウントがなければ)firebaseのアカウントを作成する
+ - [firebase](https://firebase.google.com/docs/functions/get-started?authuser=0)コマンドをローカルから実行できるようにインストールする
+ 
+
+#### 1.プロジェクトでfirebaseにログイン
+```
+firebase login
+```
+
+#### 2.アクセストークンを登録する
 ```
 firebase functions:config:set slack.token=<ボットのアクセストークン>
 firebase functions:config:set slack.channel=<投稿先のチャンネル名>
+```
+ - <投稿先のチャンネル名> : 「今日のひとこと」を投稿するチャンネル名
+ - <ボットのアクセストークン> : Slack APIページ上記載の`Bot User OAuth Access Token` 
+
+
+#### 3.デプロイする
+```
+npm run deploy
 ```
