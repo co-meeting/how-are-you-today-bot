@@ -2,6 +2,14 @@ const getQuestion = require('../questions/questions');
 
 const buildModal1 = () => {
   const blocks = [];
+  blocks.push({
+    "type": "section",
+    "text": {
+      "type": "plain_text",
+      "text": "背景画像を選択してください。",
+      "emoji": true
+    }
+  });
   for (let i = 1; i <= 10; i++) {
     const imageName = 'Image' + i;
     const value = ('00' + i).slice(-2);
@@ -27,7 +35,7 @@ const buildModal1 = () => {
           type: "button",
           text: {
             type: "plain_text",
-            text: "選択",
+            text: "この背景で投稿",
             emoji: true,
           },
           value: value,

@@ -28,7 +28,7 @@ async function viewsOpen(payload, res) {
       },
       "submit": {
         "type": "plain_text",
-        "text": "投稿",
+        "text": "次へ",
         "emoji": true
       },
       "blocks": blocks_input_answer()
