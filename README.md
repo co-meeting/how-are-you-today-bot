@@ -8,6 +8,20 @@ cp functions/.runtimeconfig.json.example functions/.runtimeconfig.json
 
 `functions/.runtimeconfig.json` を適切に設定する。
 
+
+npm パッケージのインストール
+
+```
+cd functions
+npm install
+```
+
+ローカルーサーバーの実行
+
+```
+npm run run-local
+```
+
 ## 本番デプロイ
 
 事前準備
