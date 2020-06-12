@@ -42,13 +42,31 @@ function renderText(text, style) {
   ctx.textAlign = style.textAlign;
 
   const lines = splitByMeasureWidth(text);
-  const boxHeight = lines.length * style.lineHeight;
   lines.forEach((line, index) => {
     ctx.fillText(line, canvasWidth/2, style.top + (style.lineHeight * index))
   });
 }
 
-async function generateImage(question, answer) {
+async function renderUser(user) {
+  const iconSize = 48;
+  const iconMargin = 20;
+
+  ctx.font = `bold 36px ${ctx.font}`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  const boxWidth = ctx.measureText(user.name).width;
+
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx.fillRect(0, canvasHeight - iconMargin*2 - iconSize, iconSize + 10 + boxWidth + iconMargin*2, iconSize + iconMargin*2);
+
+  const userImage = await loadImage(user.profile.image_48);
+  ctx.drawImage(userImage, iconMargin, canvasHeight - iconMargin - iconSize, iconSize, iconSize);
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText(user.name, iconMargin + iconSize + 10, canvasHeight - (iconMargin + iconSize/2));
+}
+
+async function generateImage(question, answer, user) {
   const num = getNum();
   const config = getConfig(num);
   const image = await loadImage(`https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-${num}.png`);
@@ -69,6 +87,8 @@ async function generateImage(question, answer) {
     textAlign: config.textAlign,
     top: canvasHeight/2
   });
+
+  await renderUser(user);
 
   return canvas.createPNGStream();
 }
