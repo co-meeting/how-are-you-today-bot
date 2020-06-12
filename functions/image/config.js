@@ -35,7 +35,7 @@ const config = {
     '09': {
         fillStyle: 'rgb(0, 0, 0)'
     },
-    '010': {
+    '10': {
         fillStyle: 'rgb(255, 255, 255)'
     }
 }
