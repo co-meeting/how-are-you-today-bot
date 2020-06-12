@@ -41,7 +41,7 @@ const config = {
 }
 
 function getConfig(num) {
-    return { ...config.default, ...config[num] };
+    return Object.assign(config.default, config[num]);
 }
 
 module.exports = {
