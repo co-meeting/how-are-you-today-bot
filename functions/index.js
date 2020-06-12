@@ -7,7 +7,7 @@ const { createReadStream } = require('fs');
 
 const { generateImage } = require('./image/generate-image');
 
-const modal1 = require('./blocks/modal1');
+const buildModal1 = require('./blocks/modal1');
 const modal2 = require('./blocks/modal2');
 
 const getQuestion = require('./questions/questions');
@@ -16,7 +16,7 @@ const { token, channel } = functions.config().slack;
 
 const web = new WebClient(token);
 
-async function viewsOpen(payload, res) {
+async function viewsOpen(payload, res, selectedImage) {
   try {
     const view = {
       "type": "modal",
@@ -30,14 +30,23 @@ async function viewsOpen(payload, res) {
         "text": "投稿",
         "emoji": true
       },
-      "blocks": modal1()
+      "blocks": buildModal1(selectedImage)
     };
     console.log(JSON.stringify(view));
-    const response = await web.views.open({
-      token,
-      trigger_id: payload.trigger_id,
-      view: view
-    });
+    let response;
+    if (selectedImage) {
+      response = await web.views.push({
+        token,
+        trigger_id: payload.trigger_id,
+        view: view
+      });
+    } else {
+      response = await web.views.open({
+        token,
+        trigger_id: payload.trigger_id,
+        view: view
+      });
+    }
     console.log(response);
     res.send('OK');
     return;
@@ -75,10 +84,18 @@ exports.shortcut = functions.https.onRequest(async (req, res) => {
   console.log(req.body)
   const payload = JSON.parse(req.body.payload);
   console.log(payload.type);
-  if (payload.type === 'shortcut') {
-    viewsOpen(payload, res);
-  } else
-    if (payload.type === 'view_submission') {
+  switch (payload.type) {
+    case 'shortcut':
+      viewsOpen(payload, res);
+      break;
+
+    case 'block_actions':
+      console.log(payload);
+      viewsOpen(payload, res, payload.actions[0].value);
+
+      break;
+
+    case 'view_submission': {
       postMessage(payload, res);
       // 待たずに返す
       const body = {
@@ -94,7 +111,10 @@ exports.shortcut = functions.https.onRequest(async (req, res) => {
       }
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(body));
-    } else {
-      res.sendStatus(404);
+      break;
     }
+    default:
+      res.sendStatus(404);
+
+  }
 });
