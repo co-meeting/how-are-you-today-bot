@@ -7,8 +7,9 @@ const { createReadStream } = require('fs');
 
 const { generateImage } = require('./image/generate-image');
 
-const buildModal1 = require('./blocks/modal1');
-const modal2 = require('./blocks/modal2');
+const blocks_complete = require('./blocks/complete');
+const blocks_input_answer = require('./blocks/input_answer');
+const blocks_select_image = require('./blocks/select_image');
 
 const getQuestion = require('./questions/questions');
 
@@ -16,7 +17,7 @@ const { token, channel } = functions.config().slack;
 
 const web = new WebClient(token);
 
-async function viewsOpen(payload, res, selectedImage) {
+async function viewsOpen(payload, res) {
   try {
     const view = {
       "type": "modal",
@@ -30,23 +31,15 @@ async function viewsOpen(payload, res, selectedImage) {
         "text": "投稿",
         "emoji": true
       },
-      "blocks": buildModal1(selectedImage)
+      "blocks": blocks_input_answer()
     };
     console.log(JSON.stringify(view));
-    let response;
-    if (selectedImage) {
-      response = await web.views.push({
-        token,
-        trigger_id: payload.trigger_id,
-        view: view
-      });
-    } else {
-      response = await web.views.open({
-        token,
-        trigger_id: payload.trigger_id,
-        view: view
-      });
-    }
+    let response = await web.views.open({
+      token,
+      trigger_id: payload.trigger_id,
+      view: view
+    });
+
     console.log(response);
     res.send('OK');
     return;
@@ -55,7 +48,7 @@ async function viewsOpen(payload, res, selectedImage) {
   }
 }
 
-async function postMessage(payload, res) {
+async function postMessage(payload) {
   try {
     const user = await web.users.info({
       token,
@@ -63,7 +56,7 @@ async function postMessage(payload, res) {
     });
     // TODO: 画像合成でuser.user.profile.image_48を使用する
     const question = getQuestion();
-    const answer = payload.view.state.values.question.answer.value;
+    const answer = payload.view.private_metadata;
     const file = await web.files.upload({
       token,
       filename: '今日のひとこと',
@@ -89,15 +82,9 @@ exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (re
       viewsOpen(payload, res);
       break;
 
-    case 'block_actions':
-      console.log(payload);
-      viewsOpen(payload, res, payload.actions[0].value);
-
-      break;
-
     case 'view_submission': {
-      postMessage(payload, res);
-      // 待たずに返す
+      //viewsOpen(payload, res, payload.actions[0].value);
+      const answer = payload.view.state.values.question.answer.value;
       const body = {
         "response_action": "update",
         "view": {
@@ -106,11 +93,31 @@ exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (re
             "type": "plain_text",
             "text": "今日のひとこと"
           },
-          "blocks": modal2()
+          "private_metadata": answer,
+          "blocks": blocks_select_image()
         }
       }
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(body));
+      break;
+    }
+    case 'block_actions': {
+      console.log(payload);
+      postMessage(payload, res);
+      const body = {
+        "response_action": "update",
+        "view": {
+          "type": "modal",
+          "title": {
+            "type": "plain_text",
+            "text": "今日のひとこと"
+          },
+          "blocks": blocks_complete()
+        }
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(body));
+
       break;
     }
     default:

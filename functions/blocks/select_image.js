@@ -1,22 +1,7 @@
 const getQuestion = require('../questions/questions');
 
-const buildModal1 = (selectedImage) => {
-  console.log(selectedImage);
-  const blocks = [
-    {
-      type: "input",
-      block_id: "question",
-      element: {
-        action_id: "answer",
-        type: "plain_text_input",
-      },
-      label: {
-        type: "plain_text",
-        text: getQuestion(),
-        emoji: true,
-      },
-    },
-  ];
+const buildModal1 = () => {
+  const blocks = [];
   for (let i = 1; i <= 10; i++) {
     const imageName = 'Image' + i;
     blocks.push({
@@ -47,10 +32,6 @@ const buildModal1 = (selectedImage) => {
           value: imageName,
         },
       ],
-    }
-    if (imageName === selectedImage) {
-      actionsBlock.elements[0].text.text = "✓ 選択"
-      actionsBlock.elements[0].style = "primary";
     }
     blocks.push(actionsBlock);
   }

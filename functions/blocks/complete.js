@@ -1,4 +1,4 @@
-const modal2 = () => [
+const modal_complete = () => [
   {
     "type": "section",
     "text": {
@@ -7,4 +7,4 @@ const modal2 = () => [
     }
   }
 ]
-module.exports = modal2;
+module.exports = modal_complete;
