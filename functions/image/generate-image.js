@@ -43,7 +43,7 @@ function renderText(text, style) {
 
   const lines = splitByMeasureWidth(text);
   lines.forEach((line, index) => {
-    ctx.fillText(line, canvasWidth/2, style.top + (style.lineHeight * index))
+    ctx.fillText(line, canvasWidth / 2, style.top + (style.lineHeight * index))
   });
 }
 
@@ -57,17 +57,17 @@ async function renderUser(user) {
   const boxWidth = ctx.measureText(user.name).width;
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-  ctx.fillRect(0, canvasHeight - iconMargin*2 - iconSize, iconSize + 10 + boxWidth + iconMargin*2, iconSize + iconMargin*2);
+  ctx.fillRect(0, canvasHeight - iconMargin * 2 - iconSize, iconSize + 10 + boxWidth + iconMargin * 2, iconSize + iconMargin * 2);
 
   const userImage = await loadImage(user.profile.image_48);
   ctx.drawImage(userImage, iconMargin, canvasHeight - iconMargin - iconSize, iconSize, iconSize);
 
   ctx.fillStyle = '#FFFFFF';
-  ctx.fillText(user.name, iconMargin + iconSize + 10, canvasHeight - (iconMargin + iconSize/2));
+  ctx.fillText(user.name, iconMargin + iconSize + 10, canvasHeight - (iconMargin + iconSize / 2));
 }
 
-async function generateImage(question, answer, user) {
-  const num = getNum();
+async function generateImage(question, answer, user, imageNum) {
+  const num = imageNum || getNum();
   const config = getConfig(num);
   const image = await loadImage(`https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-${num}.png`);
   registerFont(config.font.path, config.font.fontFace);
@@ -89,7 +89,7 @@ async function generateImage(question, answer, user) {
     lineHeight: 84,
     fillStyle: config.fillStyle,
     textAlign: config.textAlign,
-    top: canvasHeight/2
+    top: canvasHeight / 2
   });
 
   await renderUser(user);

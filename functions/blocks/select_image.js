@@ -4,6 +4,7 @@ const buildModal1 = () => {
   const blocks = [];
   for (let i = 1; i <= 10; i++) {
     const imageName = 'Image' + i;
+    const value = ('00' + i).slice(-2);
     blocks.push({
       type: "divider",
     });
@@ -16,7 +17,7 @@ const buildModal1 = () => {
           emoji: true,
         },
         image_url:
-          `https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-${('00' + i).slice(-2)}.png`,
+          `https://co-meeting.github.io/how-are-you-today-bot/images/how-are-you-${value}.png`,
         alt_text: imageName,
       });
     var actionsBlock = {
@@ -29,7 +30,7 @@ const buildModal1 = () => {
             text: "選択",
             emoji: true,
           },
-          value: imageName,
+          value: value,
         },
       ],
     }

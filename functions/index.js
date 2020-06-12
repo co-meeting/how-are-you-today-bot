@@ -63,7 +63,7 @@ async function postMessage(payload) {
       channels: channel,
       initial_comment: `Q:「${question}」\n<@${payload.user.id}>:「${answer}」`,
       // file: createReadStream('./sample_image.png')
-      file: await generateImage(question, answer, user.user)
+      file: await generateImage(question, answer, user.user, payload.actions[0].value)
     });
     console.log(file);
     return file;
