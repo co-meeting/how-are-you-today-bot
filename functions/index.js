@@ -57,6 +57,7 @@ async function postMessage(payload, res) {
     const answer = payload.view.state.values.question.answer.value;
     const file = await web.files.upload({
       token,
+      filename: '今日のひとこと',
       channels: channel,
       initial_comment: `Q:「${question}」\n<@${payload.user.id}>:「${answer}」`,
       // file: createReadStream('./sample_image.png')
