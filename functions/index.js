@@ -23,7 +23,7 @@ async function viewsOpen(payload, res) {
       "callback_id": payload.callback_id,
       "title": {
         "type": "plain_text",
-        "text": "今日の気分は？"
+        "text": "今日のひとこと"
       },
       "submit": {
         "type": "plain_text",
@@ -87,7 +87,7 @@ exports.shortcut = functions.https.onRequest(async (req, res) => {
           "type": "modal",
           "title": {
             "type": "plain_text",
-            "text": "今日の気分は？"
+            "text": "今日のひとこと"
           },
           "blocks": modal2()
         }
