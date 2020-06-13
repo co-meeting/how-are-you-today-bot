@@ -94,9 +94,12 @@ async function showCompleteView(payload) {
 }
 
 exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
-  const payload = JSON.parse(req.body.payload);
+  const payload = req.body.payload
+    ? JSON.parse(req.body.payload)
+    : req.body;
   switch (payload.type) {
     case 'shortcut':
+    case undefined:
       viewsOpen(payload, res);
       break;
 
