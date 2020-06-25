@@ -52,7 +52,6 @@ async function postMessage(payload) {
       token,
       user: payload.user.id
     });
-    // TODO: 画像合成でuser.user.profile.image_48を使用する
     const question = getQuestion();
     const answer = payload.view.private_metadata;
     const file = await web.files.upload({
@@ -60,7 +59,6 @@ async function postMessage(payload) {
       filename: '今日のひとこと',
       channels: channel,
       initial_comment: `Q:「${question}」\n<@${payload.user.id}>:「${answer}」`,
-      // file: createReadStream('./sample_image.png')
       file: await generateImage(question, answer, user.user, payload.actions[0].value)
     });
     return file;
