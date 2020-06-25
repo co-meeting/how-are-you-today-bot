@@ -1,8 +1,22 @@
-# Slack 今日のひとことBot の導入方法と開発環境のデプロイ方法
+# Slackアプリ「今日のひとこと」
 
+「今日のひとこと」は、リモートワークの雑談のネタを提供し、職場環境を良くするSlackアプリです。
 
-## 事前準備(Slack API設定編)
+## 使い方
 
+1. 「今日のひとこと」を起動する。
+2. 「最近買ったよかったものは？」のような質問が聞かれるので、答えを入力する。
+3. 気分に合った背景画像を選んで投稿する。
+4. 以下のような画像がSlackに投稿されます。
+![image](https://user-images.githubusercontent.com/877015/85718043-1578c580-b729-11ea-8ae1-cd73eae9dbfe.png)
+![image](https://user-images.githubusercontent.com/877015/85718813-d26b2200-b729-11ea-89f9-53b046129770.png)
+
+毎朝始業のときに「今日のひとこと」を投稿すれば、リモートワークで不足しがちな雑談のネタを毎日提供します。
+毎日続けるとメンバーのことをより知ることができ、より働きやすい職場環境を作ることができます！
+
+## インストール手順
+
+### Slackアプリの設定手順
 
 #### 1.[Slack API: Applications](https://api.slack.com/apps) を開き、アプリを新規作成( `Create New App` )
 ```
@@ -54,79 +68,14 @@ Callback ID: how_are_you_today
  1. 任意のチャンネルを開き、[詳細]を開く
  2. [その他]を選択し、[アプリを追加する]を選択する
  3. リストから[今日のひとこと]を探して、[追加]ボタンをクリックして追加する
- 
- 
-## ローカル開発
+
+### Firebaseにデプロイ
 
 #### 事前準備
- - [ngrok](https://ngrok.com/)コマンドをローカルから実行できるようにインストールする
- 
-
-#### 1.runtimeconfig.jsonファイルを生成
-
-```
-cp functions/.runtimeconfig.json.example functions/.runtimeconfig.json
-```
-
-`functions/.runtimeconfig.json` を適切に設定する
- - "channel" : 「今日のひとこと」を投稿するチャンネル名
- - "token" : Slack APIページ上記載の`Bot User OAuth Access Token` 
-   - Install Appを開くと表示あり
- - "signing_secret" : Slack APIページ上記載の`Signing Secret` 
-   - Basic Informationを開くと、App Credentialsに記載あり（showボタンの押下で閲覧可能）
-
-
-#### 2.npm パッケージのインストール
-```
-cd functions
-npm install
-```
-
-#### 3.ローカルーサーバーの実行
-
-```
-npm run run-local
-```
-
-#### 4.ngrokを利用しローカルサーバーを外部公開
-```
-ngrok http 5001
-```
-上記を実行すると以下のようなメッセージがターミナルに出力される
-```
-ngrok by @inconshreveable                                                           (Ctrl+C to quit)
-                                                                                                    
-Session Status                online                                                                
-Session Expires               6 hours, 19 minutes                                                   
-Version                       2.3.35                                                                
-Region                        United States (us)                                                    
-Web Interface                 http://127.0.0.1:4040                                                 
-Forwarding                    http://xxxxxxxxxxxxxx.ngrok.io -> http://localhost:5001                 
-Forwarding                    https://xxxxxxxxxxxxxx.ngrok.io -> http://localhost:5001                
-                                                                                                    
-Connections                   ttl     opn     rt1     rt5     p50     p90                           
-                              16      0       0.00    0.00    1.59    60.92                         
-```
-
-#### 5.外部公開URLを `Request URL`へ設定
-```
-<ngrokのURL>/how-are-you-today-bot/us-central1/shortcut
-```
- - `Request URL` は、Interactivity & Shortcuts を開き、`Interactivity` が ON の時に、設定できるパラメータである
- - 上記出力ケースの場合、以下のような値を`Request URL`へ設定
-    - `https://xxxxxxxxxxxxxx.ngrok.io/how-are-you-today-bot/us-central1/shortcut`
-    
-#### 以上で、ローカルサーバーの情報を元に動作検証しながらアプリ実行可能
-
-
-## 本番デプロイ
-
-
-#### 事前準備
- - (アカウントがなければ)firebaseのアカウントを作成する
- - firebaseのプロジェクトを作成する
- - firebaseの外部公開URLを `Request URL`へ設定
- - [firebase](https://firebase.google.com/docs/functions/get-started?authuser=0)コマンドをローカルから実行できるようにインストールする
+ - (アカウントがなければ)Firebaseのアカウントを作成する
+ - Firebaseのプロジェクトを作成する
+ - Firebaseの外部公開URLを `Request URL`へ設定
+ - [firebase](https://firebase.google.com/docs/functions/get-started?authuser=0)コマンドをローカルにインストールする
  
 
 #### 1.プロジェクトでfirebaseにログイン
@@ -147,3 +96,76 @@ firebase functions:config:set slack.channel=<投稿先のチャンネル名>
 ```
 npm run deploy
 ```
+
+#### 4. Slackアプリ設定の `Request URL`へ設定
+
+FirebaseプロジェクトコンソールでFunctionsを開き、デプロイされた関数のURLを確認する。
+Slackアプリ設定の「Interactivity & Shortcuts」を開き、`Request URL` へそのURLを設定する。
+ 
+## ローカル開発手順
+
+### 事前準備
+ - [ngrok](https://ngrok.com/)コマンドをローカルから実行できるようにインストールする
+ 
+
+### 1.runtimeconfig.jsonファイルを生成
+
+```
+cp functions/.runtimeconfig.json.example functions/.runtimeconfig.json
+```
+
+`functions/.runtimeconfig.json` を適切に設定する
+ - "channel" : 「今日のひとこと」を投稿するチャンネル名
+ - "token" : Slack APIページ上記載の`Bot User OAuth Access Token` 
+   - Install Appを開くと表示あり
+ - "signing_secret" : Slack APIページ上記載の`Signing Secret` 
+   - Basic Informationを開くと、App Credentialsに記載あり（showボタンの押下で閲覧可能）
+
+
+### 2.npm パッケージのインストール
+```
+cd functions
+npm install
+```
+
+### 3.ローカルーサーバーの実行
+
+```
+npm run run-local
+```
+
+### 4.ngrokを利用しローカルサーバーを外部公開
+```
+ngrok http 5001
+```
+上記を実行すると以下のようなメッセージがターミナルに出力される
+```
+ngrok by @inconshreveable                                                           (Ctrl+C to quit)
+                                                                                                    
+Session Status                online                                                                
+Session Expires               6 hours, 19 minutes                                                   
+Version                       2.3.35                                                                
+Region                        United States (us)                                                    
+Web Interface                 http://127.0.0.1:4040                                                 
+Forwarding                    http://xxxxxxxxxxxxxx.ngrok.io -> http://localhost:5001                 
+Forwarding                    https://xxxxxxxxxxxxxx.ngrok.io -> http://localhost:5001                
+                                                                                                    
+Connections                   ttl     opn     rt1     rt5     p50     p90                           
+                              16      0       0.00    0.00    1.59    60.92                         
+```
+
+### 5.外部公開URLをSlackアプリ設定の `Request URL`へ設定
+
+Slackアプリ設定の「Interactivity & Shortcuts」を開き、`Request URL` へ以下の値を設定
+
+```
+<ngrokのHTTPSのURL>/how-are-you-today-bot/us-central1/shortcut
+```
+
+例えば、上記のコマンド出力の場合は以下の値になります。
+```
+https://xxxxxxxxxxxxxx.ngrok.io/how-are-you-today-bot/us-central1/shortcut
+```
+    
+### 以上で、ローカルでSlackアプリを動かすことができます。
+
