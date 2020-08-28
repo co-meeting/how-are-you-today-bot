@@ -10,7 +10,7 @@ function getIndex(day) {
 
 const getQuestion = function () {
   // 順番に質問を表示
-  var date1 = new Date(2020, 4, 29);  // 起点:2020/5/29
+  var date1 = new Date(2020, 6, 29);  // 起点:2020/7/29
   var date2 = new Date();
   // 日本のタイムゾーンに合わせる
   date2 = date2.getTime() + 9 * 60 * 60 * 1000;
