@@ -121,9 +121,9 @@ exports.shortcut = functions.region('asia-northeast1').https.onRequest(async (re
       break;
     }
     case 'block_actions': {
-      res.send('OK');
-      postMessage(payload, res);
       showCompleteView(payload);
+      await postMessage(payload, res);
+      res.send('OK');
       break;
     }
     default:
